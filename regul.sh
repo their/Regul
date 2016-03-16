@@ -21,7 +21,7 @@ do
 	echo Temperature: $maxtemp
 	freq=$(cgminer-api stats | grep frequency] | awk '{print $3}')
 	echo Frequence: $freq
-	if [ $maxtemp -gt $TMAX ]
+	if [ $maxtemp -gt $TMAX ] && [ $freq'' != "100" ]
 	then 
 		echo "Aaahhhhhh!! I'm burning!! $maxtemp Celsius degrees";
 		newFreq=$(cat freqList | grep -A "$FREQ_STEP" "$freq:" | tail -n 1)
@@ -30,7 +30,7 @@ do
 		echo Restarting...
 		sleep 1s
 		/etc/init.d/cgminer.sh restart
-	elif [ $maxtemp -lt $TMIN ]
+	elif [ $maxtemp -lt $TMIN ] && [ $freq'' != "500" ]
 	then
 		echo "Increase the power...!! Only $maxtemp Celsius degrees"
 		newFreq=$(cat freqList | grep -B "$FREQ_STEP" "$freq:" | head -n 1)
